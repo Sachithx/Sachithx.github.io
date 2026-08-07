@@ -1,2 +1,5 @@
-# sachith.github.io
-Personal academic website of Sachith. PhD student, research, publications, and updates.
+# Sachithx.github.io
+
+Personal academic website of Sachith Abeywickrama — Ph.D. researcher at NTU and A*STAR.
+
+Live: https://sachithx.github.io
