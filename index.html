@@ -2,11 +2,260 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sachith | PhD Research</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sachith Abeywickrama | AI Research</title>
+  <meta name="description" content="Ph.D. researcher at NTU and A*STAR developing efficient, trustworthy, and adaptive AI systems for sequential data.">
+  <meta name="author" content="Sachith Abeywickrama">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Sachith</h1>
-  <p>PhD student | Researcher</p>
-  <p>This site is under construction.</p>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="logo" href="#top">Sachith</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#research">Research</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="resume.pdf" download>Resume</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-signal" aria-hidden="true">
+        <svg class="wave" viewBox="0 0 1200 600" preserveAspectRatio="none">
+          <path class="wave-path wave-a" d=""></path>
+          <path class="wave-path wave-b" d=""></path>
+          <path class="wave-path wave-c" d=""></path>
+        </svg>
+      </div>
+      <div class="hero-copy">
+        <p class="hero-brand">Sachith Abeywickrama</p>
+        <h1>Efficient, trustworthy AI for sequential data.</h1>
+        <p class="hero-lead">
+          Ph.D. researcher at NTU and A*STAR working on foundation models,
+          continual learning, and interpretable systems under real-world shift.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#research">View research</a>
+          <a class="btn btn-ghost" href="mailto:e240203@e.ntu.edu.sg">Email me</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="research">
+      <div class="section-head">
+        <p class="eyebrow">Selected research</p>
+        <h2>Ph.D. work under review</h2>
+        <p class="section-lead">
+          Methods for adaptive, interpretable, and data-efficient modeling of non-stationary sequences.
+        </p>
+      </div>
+
+      <div class="research-list">
+        <article class="research-item reveal">
+          <div class="research-meta">
+            <h3>ConceptTime</h3>
+            <p class="tag">Interpretable time-series</p>
+          </div>
+          <p>
+            A self-grounding concept bottleneck that discovers temporal segments and human-inspectable
+            concepts, with a built-in trust score for unfamiliar inputs. Across 17 benchmarks, it reaches
+            97.9% accuracy on Epilepsy using only 1% labeled data.
+          </p>
+        </article>
+
+        <article class="research-item reveal">
+          <div class="research-meta">
+            <h3>EntroPE</h3>
+            <p class="tag">Time-series transformers</p>
+          </div>
+          <p>
+            Entropy-guided dynamic patch segmentation that places boundaries at natural temporal changes
+            instead of fixed windows, reducing average forecasting error by roughly 8–10% versus static patching.
+          </p>
+        </article>
+
+        <article class="research-item reveal">
+          <div class="research-meta">
+            <h3>PACT</h3>
+            <p class="tag">Continual adaptation</p>
+          </div>
+          <p>
+            Identity-preserving domain-incremental adaptation for frozen time-series foundation models.
+            Lightweight local adapters maintain 0.984 average macro-F1 across four sequential conditions
+            with only 5% labeled calibration data and no condition identity at test time.
+          </p>
+        </article>
+
+        <article class="research-item reveal">
+          <div class="research-meta">
+            <h3>NeurInferno</h3>
+            <p class="tag">Protocol inference</p>
+          </div>
+          <p>
+            Field inference for unknown binary protocols without priors or binaries. A pretrained byte model
+            and cross-message transformer achieve 0.807 average boundary F1 and 0.815 recall across 12 unseen
+            protocols, lifting recall from 0.54 to 0.81 over strong trace-only baselines.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section band" id="experience">
+      <div class="section-head">
+        <p class="eyebrow">Path</p>
+        <h2>Research and industry experience</h2>
+        <p class="section-lead">
+          From production LLM systems to distributed foundation-model research.
+        </p>
+      </div>
+
+      <ol class="timeline">
+        <li class="timeline-item reveal">
+          <div class="timeline-when">Aug 2024 – Present</div>
+          <div class="timeline-body">
+            <h3>Ph.D. Researcher / Research Scholar</h3>
+            <p class="org">Institute for Infocomm Research, A*STAR · Singapore</p>
+            <p>
+              Building efficient, trustworthy, and continual-learning methods for foundation models under
+              distribution shift and limited labels. Running reproducible PyTorch pipelines and multi-GPU
+              training on SLURM for time-series foundation models and open-source LLMs.
+            </p>
+          </div>
+        </li>
+        <li class="timeline-item reveal">
+          <div class="timeline-when">May 2023 – Jun 2024</div>
+          <div class="timeline-body">
+            <h3>Associate Machine Learning Engineer</h3>
+            <p class="org">Rootcode · Sri Lanka</p>
+            <p>
+              Delivered document QA, semantic search, NER, and open-source LLM applications for enterprise
+              access problems. Productionized models with FastAPI, Docker, evaluation workflows, and cloud infrastructure.
+            </p>
+          </div>
+        </li>
+        <li class="timeline-item reveal">
+          <div class="timeline-when">Nov 2022 – Apr 2023</div>
+          <div class="timeline-body">
+            <h3>Artificial Intelligence Engineer Intern</h3>
+            <p class="org">Rootcode · Sri Lanka</p>
+            <p>
+              Built conversational AI and semantic-search systems for e-commerce discovery and support,
+              deploying containerized FastAPI services on AWS with cloud NoSQL backends.
+            </p>
+          </div>
+        </li>
+        <li class="timeline-item reveal">
+          <div class="timeline-when">Jun 2022 – Sep 2022</div>
+          <div class="timeline-body">
+            <h3>Research Intern</h3>
+            <p class="org">Nanyang Technological University · Remote</p>
+            <p>
+              Worked on data-efficient polymer property prediction using topological molecular features,
+              training convolutional, transformer, and ensemble models with persistent spectral fingerprints.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section" id="education">
+      <div class="section-head">
+        <p class="eyebrow">Background</p>
+        <h2>Education and honors</h2>
+      </div>
+
+      <div class="split">
+        <div class="stack reveal">
+          <h3 class="stack-title">Education</h3>
+          <div class="edu-item">
+            <h4>Nanyang Technological University</h4>
+            <p class="org">Ph.D. Student, Electrical and Electronic Engineering</p>
+            <p class="muted">Singapore · Aug 2024 – Present</p>
+            <p>Research with A*STAR on efficient, interpretable, and continually adaptive AI for non-stationary sequential data.</p>
+          </div>
+          <div class="edu-item">
+            <h4>University of Colombo</h4>
+            <p class="org">B.Sc. (Hons), Industrial Statistics and Mathematical Finance</p>
+            <p class="muted">Sri Lanka · Jan 2019 – Apr 2023</p>
+          </div>
+        </div>
+
+        <div class="stack reveal">
+          <h3 class="stack-title">Honors</h3>
+          <div class="edu-item">
+            <h4>Second Runner-up</h4>
+            <p class="org">China-ASEAN Student Innovation &amp; Entrepreneurship Challenge</p>
+            <p class="muted">Guiyang, China · July 2026</p>
+            <p>
+              Awarded for “Precision Drive Coming,” an autonomous humanoid robotics joint solution representing NTU.
+              Selected among 32 finalists from 1,007 entries across 149 universities.
+            </p>
+          </div>
+          <div class="edu-item">
+            <h4>Singapore International Graduate Award (SINGA)</h4>
+            <p class="org">A*STAR</p>
+            <p class="muted">2024</p>
+            <p>Competitive Ph.D. scholarship supporting doctoral study at NTU and research at A*STAR’s Institute for Infocomm Research.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section band" id="skills">
+      <div class="section-head">
+        <p class="eyebrow">Toolkit</p>
+        <h2>Technical skills</h2>
+      </div>
+      <div class="skills-grid reveal">
+        <div>
+          <h3>Machine learning</h3>
+          <p>PyTorch, TensorFlow, scikit-learn, Transformers, foundation models, LLMs, self-supervised learning, continual learning, generative AI</p>
+        </div>
+        <div>
+          <h3>Trustworthy &amp; efficient AI</h3>
+          <p>Interpretable AI, out-of-distribution detection, few-shot learning, model adaptation, efficient sequence modeling, uncertainty estimation</p>
+        </div>
+        <div>
+          <h3>Applications</h3>
+          <p>Time-series modeling, NLP, semantic search, information retrieval, document QA, named-entity recognition, anomaly detection</p>
+        </div>
+        <div>
+          <h3>Systems</h3>
+          <p>Python, SLURM, distributed multi-GPU training, Docker, Git, FastAPI, AWS, Google Cloud, Microsoft Azure</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="section-head">
+        <p class="eyebrow">Connect</p>
+        <h2>Let’s talk research or collaboration.</h2>
+        <p class="section-lead">
+          Based in Singapore. Open to research discussions, collaborations, and academic opportunities.
+        </p>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:e240203@e.ntu.edu.sg">e240203@e.ntu.edu.sg</a>
+        <a href="https://linkedin.com/in/sachithabey" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/Sachithx" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="resume.pdf" download>Download resume</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Sachith Abeywickrama</p>
+    <p class="muted">NTU · A*STAR I<sup>2</sup>R · Singapore</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
