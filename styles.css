@@ -412,11 +412,10 @@ main,
 }
 
 .award-figure img {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  max-height: 22rem;
-  object-fit: cover;
-  object-position: center 30%;
+  max-height: 28rem;
   border-radius: 2px;
 }
 
