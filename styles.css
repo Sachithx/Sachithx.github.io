@@ -207,6 +207,16 @@ main,
   animation: rise 0.9s ease both;
 }
 
+.hero-portrait {
+  width: 5.75rem;
+  height: 5.75rem;
+  margin: 0 0 1.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  border: 1px solid var(--line);
+}
+
 .hero-brand {
   margin: 0 0 1rem;
   font-size: clamp(1.5rem, 3vw, 2rem);
@@ -394,6 +404,27 @@ main,
 .edu-item p {
   color: var(--ink-soft);
   font-weight: 300;
+}
+
+.award-figure {
+  margin: 1.25rem 0 0;
+  padding: 0;
+}
+
+.award-figure img {
+  width: 100%;
+  height: auto;
+  max-height: 22rem;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 2px;
+}
+
+.award-figure figcaption {
+  margin-top: 0.55rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 400;
 }
 
 .muted {
