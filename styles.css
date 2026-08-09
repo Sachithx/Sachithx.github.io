@@ -823,6 +823,8 @@ main,
 }
 
 .result-card {
+  min-width: 0;
+  overflow: hidden;
   padding: clamp(1.4rem, 3vw, 2rem);
   background: rgba(255, 255, 255, 0.32);
   border: 1px solid var(--line);
@@ -1127,7 +1129,7 @@ main,
   }
 
   .results-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
   }
 
@@ -1135,6 +1137,15 @@ main,
     min-height: 15.5rem;
     display: flex;
     flex-direction: column;
+  }
+
+  .result-card:nth-child(3) {
+    grid-column: 1 / -1;
+    min-height: 12.5rem;
+  }
+
+  .result-card .result-value {
+    font-size: clamp(2rem, 3vw, 2.8rem);
   }
 
   .result-card p:last-child {
