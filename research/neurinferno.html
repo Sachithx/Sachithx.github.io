@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeurInferno | Sachith Abeywickrama</title>
+  <meta name="description" content="NeurInferno infers byte-level field boundaries in unseen binary protocols from raw message traces, without specifications, priors, executables, or target-protocol training.">
+  <meta name="author" content="Sachith Abeywickrama">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Sora:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="project-page project-neurinferno">
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="logo" href="../index.html">Sachith</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../index.html#research">Research</a>
+      <a href="#motivation">Motivation</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+    </nav>
+    <a class="nav-cta" href="../papers/NEURINFERNO___Sachith.pdf">Paper</a>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <a class="breadcrumb" href="../index.html#research">Back to selected research</a>
+      <p class="project-kicker">Protocol reverse engineering · 2026</p>
+      <h1>NeurInferno</h1>
+      <p class="project-paper-title">Field Inference for Unknown Binary Protocols Without Priors or Binaries</p>
+      <p class="project-lead">
+        A trace-only neural system that recovers byte-level field boundaries in a protocol it has never seen,
+        using only a collection of raw same-format messages at inference time.
+      </p>
+      <p class="project-byline">Sachith Abeywickrama, Min Wu, Xiaoli Li, and Chau Yuen</p>
+      <div class="project-actions">
+        <a class="btn btn-primary" href="../papers/NEURINFERNO___Sachith.pdf">Read the paper</a>
+        <a class="btn btn-ghost" href="#results">View benchmark results</a>
+      </div>
+
+      <div class="project-metrics" aria-label="NeurInferno headline results">
+        <div class="project-metric">
+          <strong>0.807</strong>
+          <span>average boundary F1 across 12 held-out binary protocols</span>
+        </div>
+        <div class="project-metric">
+          <strong>0.815</strong>
+          <span>average recall, up from 0.538 for the strongest trace-only baseline by F1</span>
+        </div>
+        <div class="project-metric">
+          <strong>0.079</strong>
+          <span>false-positive rate under strict leave-one-protocol-out evaluation</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section" id="motivation">
+      <div class="project-section-head">
+        <span class="section-number">01</span>
+        <div>
+          <p class="project-kicker">Motivation</p>
+          <h2>A binary message hides its own structure.</h2>
+        </div>
+      </div>
+      <div class="project-two-col">
+        <div class="project-copy">
+          <p>
+            Field inference is the first step in reverse engineering an unknown protocol: determine where one field ends
+            and the next begins. Parser construction, fuzzing, intrusion detection, and malware command-and-control analysis
+            all depend on getting these boundaries right.
+          </p>
+          <p>
+            A single byte sequence is ambiguous. The same four bytes could encode a number, timestamp, checksum, length,
+            or several smaller fields. Existing systems typically need analyst-supplied priors, a runnable target binary,
+            or training on the target protocol's own traffic. <strong>The missing evidence is often visible only across messages:</strong>
+            constants stay fixed, payloads vary, and length fields co-vary with message size.
+          </p>
+        </div>
+        <aside class="insight-card">
+          <p class="insight-label">Core idea</p>
+          <h3>Learn protocol-agnostic fingerprints across messages.</h3>
+          <p>
+            NeurInferno is trained once on documented formats, then frozen. At deployment it compares the same byte offset
+            across a group of unknown same-format messages and predicts every inter-byte boundary in one forward pass.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="project-section" id="method">
+      <div class="project-section-head">
+        <span class="section-number">02</span>
+        <div>
+          <p class="project-kicker">Method</p>
+          <h2>Within-message context plus cross-message evidence.</h2>
+        </div>
+      </div>
+      <div class="method-grid">
+        <article class="method-step">
+          <h3>Pretrain byte surprise</h3>
+          <p>A Byte Generative Model learns next-byte prediction from raw protocol messages. Its predictive entropy becomes an explicit cue for changes in byte structure.</p>
+        </article>
+        <article class="method-step">
+          <h3>Compare each offset</h3>
+          <p>The Cross-Message Byte Encoder computes mean, variance, and maximum activation at the same offset across valid messages and injects them at every transformer layer.</p>
+        </article>
+        <article class="method-step">
+          <h3>Classify the gap</h3>
+          <p>For each adjacent byte pair, the boundary head combines both embeddings, their difference and interaction, Byte-GM entropy, and cross-message variance.</p>
+        </article>
+        <article class="method-step">
+          <h3>Freeze for deployment</h3>
+          <p>The Byte-GM, encoder, and heads are fixed after offline training. An unseen protocol needs no labels, specification, executable, endianness prior, or target-specific retraining.</p>
+        </article>
+      </div>
+      <p class="method-caption">
+        An optional auxiliary head assigns coarse protocol-agnostic roles after segmentation. It is not used to improve the boundary results reported below, which come from direct gap-level training.
+      </p>
+    </section>
+
+    <section class="project-section" id="results">
+      <div class="project-section-head">
+        <span class="section-number">03</span>
+        <div>
+          <p class="project-kicker">Performance</p>
+          <h2>High recall without giving up competitive precision.</h2>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <article class="result-card">
+          <p class="result-value">0.808</p>
+          <h3>Boundary precision</h3>
+          <p>Competitive with the conservative BinaryInferno detector at 0.736, while recovering far more true boundaries.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-value">0.784</p>
+          <h3>Leave-four-protocols-out F1</h3>
+          <p>Removing four protocols from the training pool reduces average F1 by only 0.023 from the leave-one-out setting.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-value">1.4-6.6 ms</p>
+          <h3>Inference per message</h3>
+          <p>The 1.44M-parameter frozen model runs from 1.4 ms on an RTX 6000 Ada to 6.6 ms on a commodity Xeon CPU.</p>
+        </article>
+      </div>
+
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <caption>Average boundary detection across 12 held-out protocols. Netzob is averaged over 10 protocols because it failed on DHCP and OSPF.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Method</th>
+              <th scope="col">Precision</th>
+              <th scope="col">Recall</th>
+              <th scope="col">False-positive rate</th>
+              <th scope="col">F1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">NeurInferno</th><td><strong>0.808</strong></td><td><strong>0.815</strong></td><td>0.079</td><td><strong>0.807</strong></td></tr>
+            <tr><th scope="row">NetPlier</th><td>0.565</td><td>0.538</td><td>0.201</td><td>0.533</td></tr>
+            <tr><th scope="row">Nemesys</th><td>0.505</td><td>0.342</td><td>0.198</td><td>0.398</td></tr>
+            <tr><th scope="row">Netzob</th><td>0.562</td><td>0.266</td><td>0.145</td><td>0.316</td></tr>
+            <tr><th scope="row">BinaryInferno</th><td>0.736</td><td>0.115</td><td>0.000</td><td>0.192</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="project-note">The held-out protocol is excluded from main-model training, validation, hyperparameter tuning, and Byte-GM pretraining. Ground-truth dissector labels are used only for evaluation.</p>
+    </section>
+
+    <section class="project-section" id="scope">
+      <div class="project-section-head">
+        <span class="section-number">04</span>
+        <div>
+          <p class="project-kicker">What the results show</p>
+          <h2>Both uncertainty and message collections carry boundary evidence.</h2>
+        </div>
+      </div>
+      <div class="project-two-col">
+        <div class="project-copy">
+          <p>
+            Removing cross-message statistics reduces leave-one-out F1 from 0.807 to 0.741. Removing Byte-GM entropy
+            produces a similar drop to 0.742. The two signals are complementary: one exposes fixed-versus-variable behavior
+            across messages, while the other marks changes in within-message predictability.
+          </p>
+          <p>
+            Performance improves with more same-format messages and largely saturates around 64-100 messages, but the model
+            retains most of its final F1 with 32. Its advantage is consistent across link, network, transport, routing,
+            infrastructure, and industrial-control protocols.
+          </p>
+        </div>
+        <ul class="scope-list">
+          <li><strong>Byte-level resolution</strong>Sub-byte fields such as packed flags cannot be recovered.</li>
+          <li><strong>Plaintext structure required</strong>Encrypted payloads remove the statistical regularities the model uses.</li>
+          <li><strong>Coarse semantics</strong>The optional eight-role vocabulary cannot recover protocol-specific field names without external knowledge.</li>
+          <li><strong>Message grouping assumption</strong>Inputs are collections of messages that share an unknown format; fixed-size formats provide less cross-message evidence.</li>
+        </ul>
+      </div>
+    </section>
+
+    <aside class="project-navigation" aria-labelledby="more-work">
+      <h2 id="more-work">More research</h2>
+      <div class="project-nav-grid">
+        <a class="project-nav-card" href="concepttime.html"><span>Interpretable time-series</span><strong>ConceptTime →</strong></a>
+        <a class="project-nav-card" href="entrope.html"><span>Dynamic patching</span><strong>EntroPE →</strong></a>
+        <a class="project-nav-card" href="pact.html"><span>Continual adaptation</span><strong>PACT →</strong></a>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Sachith Abeywickrama</p>
+    <p class="muted">NTU · A*STAR I<sup>2</sup>R · Singapore</p>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

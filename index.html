@@ -9,7 +9,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Sora:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -68,49 +68,72 @@
       <div class="research-list">
         <article class="research-item reveal">
           <div class="research-meta">
-            <h3>ConceptTime</h3>
+            <h3><a class="research-title-link" href="research/concepttime.html">ConceptTime</a></h3>
             <p class="tag">Interpretable time-series</p>
           </div>
-          <p>
-            A self-grounding concept bottleneck that discovers temporal segments and human-inspectable
-            concepts, with a built-in trust score for unfamiliar inputs. Across 17 benchmarks, it reaches
-            97.9% accuracy on Epilepsy using only 1% labeled data.
-          </p>
+          <div class="research-summary">
+            <p>
+              A self-grounding concept bottleneck that discovers temporal segments and human-inspectable
+              concepts, with a built-in trust score for unfamiliar inputs. Across 17 benchmarks, it reaches
+              97.91% accuracy on Epilepsy using only 1% labeled data.
+            </p>
+            <div class="research-actions">
+              <a href="research/concepttime.html">Explore project <span aria-hidden="true">→</span></a>
+              <a href="papers/ConceptTime.pdf">Read paper</a>
+            </div>
+          </div>
         </article>
 
         <article class="research-item reveal">
           <div class="research-meta">
-            <h3>EntroPE</h3>
+            <h3><a class="research-title-link" href="research/entrope.html">EntroPE</a></h3>
             <p class="tag">Time-series transformers</p>
           </div>
-          <p>
-            Entropy-guided dynamic patch segmentation that places boundaries at natural temporal changes
-            instead of fixed windows, reducing average forecasting error by roughly 8–10% versus static patching.
-          </p>
+          <div class="research-summary">
+            <p>
+              Entropy-guided dynamic patch segmentation that places boundaries at natural temporal changes
+              instead of fixed windows, reducing average MSE by 9.7% against PatchTST across six forecasting benchmarks.
+            </p>
+            <div class="research-actions">
+              <a href="research/entrope.html">Explore project <span aria-hidden="true">→</span></a>
+              <a href="papers/EntroPE.pdf">Read paper</a>
+            </div>
+          </div>
         </article>
 
         <article class="research-item reveal">
           <div class="research-meta">
-            <h3>PACT</h3>
+            <h3><a class="research-title-link" href="research/pact.html">PACT</a></h3>
             <p class="tag">Continual adaptation</p>
           </div>
-          <p>
-            Identity-preserving domain-incremental adaptation for frozen time-series foundation models.
-            Lightweight local adapters maintain 0.984 average macro-F1 across four sequential conditions
-            with only 5% labeled calibration data and no condition identity at test time.
-          </p>
+          <div class="research-summary">
+            <p>
+              Identity-preserving domain-incremental adaptation for frozen time-series foundation models.
+              With a frozen Sundial backbone, PACT leads all five evaluated streams, including 0.958 average
+              macro-F1 on four bearing conditions, while keeping relative forgetting below 0.05.
+            </p>
+            <div class="research-actions">
+              <a href="research/pact.html">Explore project <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
         </article>
 
         <article class="research-item reveal">
           <div class="research-meta">
-            <h3>NeurInferno</h3>
+            <h3><a class="research-title-link" href="research/neurinferno.html">NeurInferno</a></h3>
             <p class="tag">Protocol inference</p>
           </div>
-          <p>
-            Field inference for unknown binary protocols without priors or binaries. A pretrained byte model
-            and cross-message transformer achieve 0.807 average boundary F1 and 0.815 recall across 12 unseen
-            protocols, lifting recall from 0.54 to 0.81 over strong trace-only baselines.
-          </p>
+          <div class="research-summary">
+            <p>
+              Field inference for unknown binary protocols without priors or executables. A pretrained byte model
+              and cross-message transformer achieve 0.807 average boundary F1 and 0.815 recall across 12 held-out
+              protocols, lifting recall from 0.538 to 0.815 over the strongest trace-only baseline.
+            </p>
+            <div class="research-actions">
+              <a href="research/neurinferno.html">Explore project <span aria-hidden="true">→</span></a>
+              <a href="papers/NEURINFERNO___Sachith.pdf">Read paper</a>
+            </div>
+          </div>
         </article>
       </div>
     </section>

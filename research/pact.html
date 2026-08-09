@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PACT | Sachith Abeywickrama</title>
+  <meta name="description" content="PACT adapts frozen time-series foundation models to sequential operating conditions using local low-rank transports and identity-preserving soft routing.">
+  <meta name="author" content="Sachith Abeywickrama">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Sora:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="project-page project-pact">
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="logo" href="../index.html">Sachith</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../index.html#research">Research</a>
+      <a href="#motivation">Motivation</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+    </nav>
+    <a class="nav-cta" href="#results">Results</a>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <a class="breadcrumb" href="../index.html#research">Back to selected research</a>
+      <p class="project-kicker">Continual adaptation · 2026</p>
+      <h1>PACT</h1>
+      <p class="project-paper-title">Identity-Preserving Domain-Incremental Adaptation of Frozen Time-Series Foundation Models</p>
+      <p class="project-lead">
+        A frozen-host adaptation method that corrects distribution shift only where it appears in the embedding space,
+        while retaining an explicit path through the original model.
+      </p>
+      <p class="project-byline">Piecewise Adaptation via Chart Transport · Manuscript under anonymous review</p>
+      <div class="project-actions">
+        <a class="btn btn-primary" href="#method">See how it works</a>
+        <a class="btn btn-ghost" href="#results">View evaluated results</a>
+      </div>
+
+      <div class="project-metrics" aria-label="PACT headline results">
+        <div class="project-metric">
+          <strong>0.958</strong>
+          <span>average macro-F1 on four sequential bearing conditions with frozen Sundial</span>
+        </div>
+        <div class="project-metric">
+          <strong>&lt;0.05</strong>
+          <span>relative forgetting on every one of the five evaluated streams</span>
+        </div>
+        <div class="project-metric">
+          <strong>5%</strong>
+          <span>labeled calibration budget per arriving FD, HHAR, and Sleep-EDF domain</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section" id="motivation">
+      <div class="project-section-head">
+        <span class="section-number">01</span>
+        <div>
+          <p class="project-kicker">Motivation</p>
+          <h2>A new operating condition should not rewrite a good representation.</h2>
+        </div>
+      </div>
+      <div class="project-two-col">
+        <div class="project-copy">
+          <p>
+            A time-series foundation model may be trained under one machine load, person, sensor placement, or sleep cohort,
+            then encounter new conditions sequentially. Only a small labeled calibration set may be available, and the condition
+            identity may be unknown when the system makes a prediction.
+          </p>
+          <p>
+            Fine-tuning shared parameters can recover the new condition but damage earlier ones. Strong retention constraints
+            reduce that damage but can prevent useful adaptation. PACT starts from a different observation:
+            <strong>condition shift is heterogeneous across the frozen embedding space.</strong> Some local regions move substantially;
+            others are already on the correct side of the classifier boundary and should remain untouched.
+          </p>
+        </div>
+        <aside class="insight-card">
+          <p class="insight-label">Core idea</p>
+          <h3>Correct locally, preserve identity globally.</h3>
+          <p>
+            Learn small residual transports for local embedding charts, freeze each correction once learned, and always keep
+            the unmodified source representation available to the inference gate.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="project-section" id="method">
+      <div class="project-section-head">
+        <span class="section-number">02</span>
+        <div>
+          <p class="project-kicker">Method</p>
+          <h2>An accumulating atlas around an immutable host.</h2>
+        </div>
+      </div>
+      <div class="method-grid">
+        <article class="method-step">
+          <h3>Freeze the host</h3>
+          <p>The pretrained encoder and the source-trained classifier head never change. Source embeddings are standardized once and partitioned into nearest-centroid charts.</p>
+        </article>
+        <article class="method-step">
+          <h3>Fit local transports</h3>
+          <p>For each arriving condition, PACT learns an identity-initialized rank-8 residual transport per chart using the frozen head and the small labeled calibration set.</p>
+        </article>
+        <article class="method-step">
+          <h3>Freeze and append</h3>
+          <p>The new transport bank is added to the atlas. Earlier transports, the encoder, and the classifier stay frozen, preventing later domains from overwriting them.</p>
+        </article>
+        <article class="method-step">
+          <h3>Route without an ID</h3>
+          <p>A chart-specific gate softly mixes the source identity branch with all learned domain transports from the embedding alone. Test-time condition labels are not required.</p>
+        </article>
+      </div>
+      <p class="method-caption">
+        PACT also derives a margin-based preservation condition: if the gated residual displacement is smaller than the frozen classifier's margin allowance, the original prediction cannot change. Identity routing reproduces it exactly.
+      </p>
+    </section>
+
+    <section class="project-section" id="results">
+      <div class="project-section-head">
+        <span class="section-number">03</span>
+        <div>
+          <p class="project-kicker">Performance</p>
+          <h2>The strongest retention-adaptation balance in the comparison.</h2>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <article class="result-card">
+          <p class="result-value">5 / 5</p>
+          <h3>Best final average macro-F1</h3>
+          <p>With frozen Sundial embeddings, PACT leads every evaluated dataset after the full domain stream.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-value">+2.4 pts</p>
+          <h3>Average gain over the strongest alternative</h3>
+          <p>Dataset-level gains range from 1.0 point on HHAR to 4.8 points on fault diagnosis.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-value">0.982</p>
+          <h3>Fault diagnosis with 5% labels</h3>
+          <p>In the label-efficiency study with frozen Mantis, PACT reaches 0.982 AMF1 on FD and 0.923 on HHAR.</p>
+        </article>
+      </div>
+
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <caption>Sequential comparison with a frozen Sundial backbone, averaged over four domain orders. Higher AMF1 and lower RF are better.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Dataset</th>
+              <th scope="col">Strongest non-PACT AMF1</th>
+              <th scope="col">PACT AMF1</th>
+              <th scope="col">PACT relative forgetting</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">FD</th><td>0.9096</td><td><strong>0.9575</strong></td><td>0.0022</td></tr>
+            <tr><th scope="row">WISDM</th><td>0.8629</td><td><strong>0.8774</strong></td><td>0.0292</td></tr>
+            <tr><th scope="row">HHAR</th><td>0.8551</td><td><strong>0.8648</strong></td><td>0.0171</td></tr>
+            <tr><th scope="row">UCI-HAR</th><td>0.7862</td><td><strong>0.8169</strong></td><td>0.0469</td></tr>
+            <tr><th scope="row">Sleep-EDF</th><td>0.6357</td><td><strong>0.6508</strong></td><td>0.0229</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="project-note">FD uses four operating conditions; the other datasets use nine-domain streams. The strongest comparison method varies by dataset, most often embedding replay.</p>
+    </section>
+
+    <section class="project-section" id="scope">
+      <div class="project-section-head">
+        <span class="section-number">04</span>
+        <div>
+          <p class="project-kicker">What the results show</p>
+          <h2>Routing, not only low-rank adaptation, protects earlier conditions.</h2>
+        </div>
+      </div>
+      <div class="project-two-col">
+        <div class="project-copy">
+          <p>
+            Ungated local transports improve plasticity but still apply unnecessary corrections. The learned soft gate produces
+            the best average macro-F1 and the lowest performance-weighted forgetting among the adaptive variants on all five datasets.
+          </p>
+          <p>
+            Rank 8 matches a full rank-768 map within 0.002 on HHAR and UCI-HAR and performs better on the other three datasets.
+            Across eight frozen backbones, the mechanism transfers unchanged, although final quality still depends on how separable
+            the host representation is.
+          </p>
+        </div>
+        <ul class="scope-list">
+          <li><strong>Growing memory</strong>Each new domain adds a transport bank, and gate refitting retains source and calibration embeddings, though not raw time series.</li>
+          <li><strong>Overlapping domains</strong>Routing remains harder on HHAR and UCI-HAR, where oracle-domain routing leaves a visible performance gap.</li>
+          <li><strong>Hard chart assignment</strong>Nearest-centroid chart selection can be brittle near chart boundaries; bounded-memory routing and soft chart assignment are natural next steps.</li>
+        </ul>
+      </div>
+    </section>
+
+    <aside class="project-navigation" aria-labelledby="more-work">
+      <h2 id="more-work">More research</h2>
+      <div class="project-nav-grid">
+        <a class="project-nav-card" href="concepttime.html"><span>Interpretable time-series</span><strong>ConceptTime →</strong></a>
+        <a class="project-nav-card" href="entrope.html"><span>Dynamic patching</span><strong>EntroPE →</strong></a>
+        <a class="project-nav-card" href="neurinferno.html"><span>Protocol inference</span><strong>NeurInferno →</strong></a>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Sachith Abeywickrama</p>
+    <p class="muted">NTU · A*STAR I<sup>2</sup>R · Singapore</p>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>

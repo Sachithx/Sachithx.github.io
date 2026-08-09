@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConceptTime | Sachith Abeywickrama</title>
+  <meta name="description" content="ConceptTime uses predictive surprise to segment time series, discover inspectable concepts, classify with few labels, and detect unfamiliar inputs.">
+  <meta name="author" content="Sachith Abeywickrama">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Sora:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="project-page project-concepttime">
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="logo" href="../index.html">Sachith</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../index.html#research">Research</a>
+      <a href="#motivation">Motivation</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+    </nav>
+    <a class="nav-cta" href="../papers/ConceptTime.pdf">Paper</a>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <a class="breadcrumb" href="../index.html#research">Back to selected research</a>
+      <p class="project-kicker">Interpretable time-series · 2026</p>
+      <h1>ConceptTime</h1>
+      <p class="project-paper-title">Predictive Surprise as Self-Grounding Concept Bottleneck for Interpretable Time Series</p>
+      <p class="project-lead">
+        A time-series classifier that discovers its own temporal concepts, explains decisions through them,
+        and knows when an input falls outside what those concepts can describe.
+      </p>
+      <p class="project-byline">Sachith Abeywickrama, Emadeldeen Eldele, Min Wu, Xiaoli Li, and Chau Yuen</p>
+      <div class="project-actions">
+        <a class="btn btn-primary" href="../papers/ConceptTime.pdf">Read the paper</a>
+        <a class="btn btn-ghost" href="https://github.com/Sachithx/ConceptTime-1.0" target="_blank" rel="noopener noreferrer">View code</a>
+      </div>
+
+      <div class="project-metrics" aria-label="ConceptTime headline results">
+        <div class="project-metric">
+          <strong>17</strong>
+          <span>benchmarks spanning wearable sensing, biomedicine, UEA datasets, and fault diagnosis</span>
+        </div>
+        <div class="project-metric">
+          <strong>97.91%</strong>
+          <span>Epilepsy accuracy with only 1% of the training labels</span>
+        </div>
+        <div class="project-metric">
+          <strong>0.992</strong>
+          <span>OOD AUROC on the strongest evaluated Gaussian-noise shift</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section" id="motivation">
+      <div class="project-section-head">
+        <span class="section-number">01</span>
+        <div>
+          <p class="project-kicker">Motivation</p>
+          <h2>Interpretability starts before the classifier.</h2>
+        </div>
+      </div>
+      <div class="project-two-col">
+        <div class="project-copy">
+          <p>
+            In healthcare, wearable sensing, and industrial monitoring, a useful model must be accurate,
+            show which temporal patterns drove its decision, and defer when its evidence is unfamiliar.
+            Existing time-series concept bottlenecks usually depend on fixed windows or expert-defined concepts.
+          </p>
+          <p>
+            The underlying problem is circular: <strong>meaningful concepts require meaningful segment boundaries,
+            but meaningful boundaries depend on knowing what patterns to look for.</strong> Fixed windows can split
+            a natural event, while raw-shape prototypes can treat two visually similar segments as equivalent even
+            when their preceding context makes them behave very differently.
+          </p>
+        </div>
+        <aside class="insight-card">
+          <p class="insight-label">Core idea</p>
+          <h3>Use prediction failure as the common language.</h3>
+          <p>
+            A frozen forecaster's surprise tells ConceptTime where a regime changes, how the resulting segment
+            differs from expectation, and whether that segment belongs to any concept the model has learned.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="project-section" id="method">
+      <div class="project-section-head">
+        <span class="section-number">02</span>
+        <div>
+          <p class="project-kicker">Method</p>
+          <h2>One self-supervised signal, four connected stages.</h2>
+        </div>
+      </div>
+      <div class="method-grid">
+        <article class="method-step">
+          <h3>Predict what comes next</h3>
+          <p>A causal Gaussian transformer estimates the next value and its uncertainty at every time step. It is trained without labels, calibrated, and then frozen.</p>
+        </article>
+        <article class="method-step">
+          <h3>Cut at surprise</h3>
+          <p>Negative log-likelihood measures predictive surprise. A length-constrained dynamic program places a fixed number of boundaries where surprise is most informative.</p>
+        </article>
+        <article class="method-step">
+          <h3>Ground concepts</h3>
+          <p>Each segment becomes a signature of predicted moments, standardized residual shape, and its surprise trajectory. A Gaussian mixture turns these signatures into inspectable prototypes.</p>
+        </article>
+        <article class="method-step">
+          <h3>Classify and abstain</h3>
+          <p>A small transformer classifies the concept sequence. Distance to the nearest prototypes becomes a built-in fidelity score, with no extra uncertainty head.</p>
+        </article>
+      </div>
+      <p class="method-caption">
+        The path from signal to concept activation is deterministic after self-supervised fitting. Only the lightweight classifier sees task labels, reducing the opportunity for hidden label information to leak into the concepts.
+      </p>
+    </section>
+
+    <section class="project-section" id="results">
+      <div class="project-section-head">
+        <span class="section-number">03</span>
+        <div>
+          <p class="project-kicker">Performance</p>
+          <h2>Competitive accuracy, especially when labels are scarce.</h2>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <article class="result-card">
+          <p class="result-value">97.91%</p>
+          <h3>Few-shot classification</h3>
+          <p>On Epilepsy with 1% labels, ConceptTime exceeds every evaluated black-box and interpretable baseline; the best black-box comparison reaches 95.41%.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-value">0.864→0.992</p>
+          <h3>Unfamiliar-input detection</h3>
+          <p>Fidelity AUROC rises smoothly as Gaussian noise severity increases from 0.5 to 2.0, while the comparison scores remain near chance.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-value">86.99%</p>
+          <h3>Cross-domain transfer</h3>
+          <p>Average fault-diagnosis transfer accuracy with 5% target labels when the density model is adapted but the source concept vocabulary stays fixed.</p>
+        </article>
+      </div>
+
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <caption>ConceptTime-Dynamic classification accuracy from the paper. UEA is the average across 10 datasets.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Benchmark</th>
+              <th scope="col">Full labels</th>
+              <th scope="col">1% labels</th>
+              <th scope="col">5% labels</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">UCI-HAR</th><td>88.91%</td><td>74.60%</td><td>79.60%</td></tr>
+            <tr><th scope="row">Epilepsy</th><td><strong>98.39%</strong></td><td><strong>97.91%</strong></td><td><strong>98.01%</strong></td></tr>
+            <tr><th scope="row">Sleep-EDF</th><td>78.15%</td><td>72.00%</td><td>74.00%</td></tr>
+            <tr><th scope="row">UEA (10-dataset average)</th><td>71.82%</td><td>58.50%</td><td>60.10%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="project-note">Results are means over three seeds. OOD figures use the HAR perturbation study; transfer figures average the 12 directed fault-condition pairs.</p>
+    </section>
+
+    <section class="project-section" id="scope">
+      <div class="project-section-head">
+        <span class="section-number">04</span>
+        <div>
+          <p class="project-kicker">What the results show</p>
+          <h2>Predictive geometry does more than adaptive patching alone.</h2>
+        </div>
+      </div>
+      <div class="project-two-col">
+        <div class="project-copy">
+          <p>
+            Dynamic boundaries help, but the decisive signal is how a segment behaves relative to expectation.
+            On identical adaptive patches, replacing predictive signatures with raw morphology causes large drops,
+            including nearly 50 accuracy points on HAR in the ablation study.
+          </p>
+          <p>
+            The same prototype geometry also supports selective prediction and faithful patch ranking. This joins
+            classification, interpretation, and abstention without annotations, language-model calls, or a separately trained calibration head.
+          </p>
+        </div>
+        <ul class="scope-list">
+          <li><strong>Fixed concept granularity</strong>The vocabulary size is chosen rather than learned hierarchically.</li>
+          <li><strong>Human-readable, not automatically named</strong>Prototypes are inspectable exemplars, but semantic labels still require human interpretation.</li>
+          <li><strong>Current scope</strong>The paper focuses on classification; online concept updates and anomaly localization remain future extensions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <aside class="project-navigation" aria-labelledby="more-work">
+      <h2 id="more-work">More research</h2>
+      <div class="project-nav-grid">
+        <a class="project-nav-card" href="entrope.html"><span>Dynamic patching</span><strong>EntroPE →</strong></a>
+        <a class="project-nav-card" href="pact.html"><span>Continual adaptation</span><strong>PACT →</strong></a>
+        <a class="project-nav-card" href="neurinferno.html"><span>Protocol inference</span><strong>NeurInferno →</strong></a>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Sachith Abeywickrama</p>
+    <p class="muted">NTU · A*STAR I<sup>2</sup>R · Singapore</p>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
