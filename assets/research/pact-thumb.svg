@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" role="img" aria-label="Frozen embedding space divided into local charts; shifted embeddings are transported back toward their source regions.">
+  <style>
+    .chart { fill: none; stroke: #9aa7b0; stroke-width: 1.2; stroke-dasharray: 4 3; }
+    .src { fill: #c4ccd2; }
+    .shift { fill: #e3a33b; stroke: #fff; stroke-width: 1.5; }
+    .moved { fill: #0f6b5c; stroke: #fff; stroke-width: 1.5; }
+    .arrow { stroke: #0f6b5c; stroke-width: 1.6; fill: none; stroke-dasharray: 40; stroke-dashoffset: 40; animation: draw 4s ease-in-out infinite; }
+    .moved { opacity: 0; animation: appear 4s ease-in-out infinite; }
+    .label { font: 600 10px Inter, system-ui, sans-serif; fill: #687681; letter-spacing: .04em; }
+    @keyframes draw { 0%, 15% { stroke-dashoffset: 40; } 45%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 40; } }
+    @keyframes appear { 0%, 35% { opacity: 0; } 50%, 85% { opacity: 1; } 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .arrow { animation: none; stroke-dashoffset: 0; } .moved { animation: none; opacity: 1; } }
+  </style>
+  <rect width="300" height="200" fill="#ffffff"/>
+  <defs>
+    <marker id="h" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#0f6b5c"/></marker>
+  </defs>
+  <text x="14" y="20" class="label">FROZEN EMBEDDING SPACE</text>
+  <!-- local charts -->
+  <ellipse class="chart" cx="80" cy="80" rx="52" ry="36"/>
+  <ellipse class="chart" cx="205" cy="70" rx="58" ry="34"/>
+  <ellipse class="chart" cx="150" cy="150" rx="60" ry="32"/>
+  <!-- source embeddings -->
+  <g class="src">
+    <circle cx="62" cy="72" r="3.5"/><circle cx="78" cy="88" r="3.5"/><circle cx="94" cy="70" r="3.5"/><circle cx="70" cy="96" r="3.5"/><circle cx="100" cy="90" r="3.5"/><circle cx="84" cy="62" r="3.5"/>
+    <circle cx="190" cy="62" r="3.5"/><circle cx="210" cy="78" r="3.5"/><circle cx="226" cy="60" r="3.5"/><circle cx="198" cy="84" r="3.5"/><circle cx="232" cy="80" r="3.5"/>
+    <circle cx="132" cy="146" r="3.5"/><circle cx="150" cy="158" r="3.5"/><circle cx="168" cy="144" r="3.5"/><circle cx="140" cy="164" r="3.5"/><circle cx="176" cy="160" r="3.5"/><circle cx="156" cy="138" r="3.5"/>
+  </g>
+  <!-- shifted embeddings from a new condition, transported back by learned residual maps -->
+  <path class="arrow" d="M128 40 Q110 48 98 60" marker-end="url(#h)"/>
+  <path class="arrow" d="M268 110 Q250 98 236 90" marker-end="url(#h)" style="animation-delay:.3s"/>
+  <path class="arrow" d="M222 182 Q200 172 184 164" marker-end="url(#h)" style="animation-delay:.6s"/>
+  <circle class="shift" cx="130" cy="38" r="4.5"/>
+  <circle class="shift" cx="270" cy="112" r="4.5"/>
+  <circle class="shift" cx="224" cy="184" r="4.5"/>
+  <circle class="moved" cx="96" cy="62" r="4.5"/>
+  <circle class="moved" cx="234" cy="89" r="4.5" style="animation-delay:.3s"/>
+  <circle class="moved" cx="182" cy="163" r="4.5" style="animation-delay:.6s"/>
+</svg>

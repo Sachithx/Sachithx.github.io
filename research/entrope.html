@@ -3,207 +3,323 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EntroPE | Sachith Abeywickrama</title>
-  <meta name="description" content="EntroPE replaces fixed time-series patches with entropy-guided dynamic segments, preserving natural transitions while improving accuracy and efficiency.">
+  <title>EntroPE · NeurIPS 2026</title>
+  <meta name="description" content="EntroPE (NeurIPS 2026): entropy-guided dynamic patch segmentation for time-series transformers. Patch boundaries follow the signal's own transitions instead of fixed windows.">
   <meta name="author" content="Sachith Abeywickrama">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="EntroPE: Entropy Guided Dynamic Patch Segmentation for Time Series Transformers">
+  <meta property="og:description" content="NeurIPS 2026. Place patch boundaries where a small frozen model becomes uncertain, so transformers see temporally coherent patches.">
+  <meta property="og:image" content="https://sachithx.github.io/assets/research/entrope/fig2-architecture.png">
+  <meta property="og:url" content="https://sachithx.github.io/research/entrope.html">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Sora:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
-<body class="project-page project-entrope">
-  <div class="noise" aria-hidden="true"></div>
-
+<body>
   <header class="site-header">
-    <a class="logo" href="../index.html">Sachith</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="../index.html#research">Research</a>
-      <a href="#motivation">Motivation</a>
+    <a class="logo" href="../index.html">Sachith Abeywickrama</a>
+    <nav class="nav" aria-label="Page sections">
+      <a href="#overview">Overview</a>
       <a href="#method">Method</a>
       <a href="#results">Results</a>
+      <a href="#bibtex">BibTeX</a>
     </nav>
-    <a class="nav-cta" href="../papers/EntroPE.pdf">Paper</a>
+    <a class="nav-cta" href="../papers/EntroPE.pdf">Paper PDF</a>
   </header>
 
-  <main>
-    <section class="project-hero">
-      <a class="breadcrumb" href="../index.html#research">Back to selected research</a>
-      <p class="project-kicker">NeurIPS 2026 main conference · Sydney</p>
-      <h1>EntroPE</h1>
-      <p class="project-paper-title">Entropy Guided Dynamic Patch Segmentation for Time Series Transformers</p>
-      <p class="project-lead">
-        A dynamic patching framework that places boundaries where the future becomes hard to predict,
-        preserving coherent temporal patterns instead of cutting every sequence at fixed intervals.
+  <main class="paper">
+    <section class="paper-hero">
+      <span class="venue-badge">NeurIPS 2026 · Main Conference · Sydney</span>
+      <p class="paper-short">EntroPE</p>
+      <h1 class="paper-title">Entropy Guided Dynamic Patch Segmentation for Time Series Transformers</h1>
+      <ul class="authors">
+        <li class="me">Sachith Abeywickrama<sup>1,2</sup></li>
+        <li>Emadeldeen Eldele<sup>3,*</sup></li>
+        <li>Min Wu<sup>2</sup></li>
+        <li>Xiaoli Li<sup>4</sup></li>
+        <li>Chau Yuen<sup>1</sup></li>
+      </ul>
+      <ul class="affils">
+        <li><sup>1</sup>Nanyang Technological University, Singapore</li>
+        <li><sup>2</sup>IAIC, A*STAR, Singapore</li>
+        <li><sup>3</sup>Khalifa University, UAE</li>
+        <li><sup>4</sup>Singapore University of Technology and Design</li>
+      </ul>
+      <p class="paper-note"><sup>*</sup>Corresponding author</p>
+      <div class="paper-links">
+        <a class="btn btn-dark" href="../papers/EntroPE.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
+          Paper
+        </a>
+        <a class="btn btn-dark" href="https://github.com/Sachithx/EntroPE" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          Code
+        </a>
+        <a class="btn btn-ghost" href="#bibtex">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.76-2.02-2-2H4c-1.25 0-2 .75-2 1.97V11c0 1.25.75 2 2 2h1c1 0 1 1 1 2v1c0 1-1 2-2 2s-1 .01-1 1.03V21zM14 21c3 0 7-1 7-8V5c0-1.25-.76-2.02-2-2h-4c-1.25 0-2 .75-2 1.97V11c0 1.25.75 2 2 2h1c1 0 1 1 1 2v1c0 1-1 2-2 2s-1 .01-1 1.03V21z"/></svg>
+          BibTeX
+        </a>
+      </div>
+    </section>
+
+    <!-- Interactive overview -->
+    <section class="paper-section" id="overview">
+      <div class="demo" id="ep-demo">
+        <div class="demo-bar">
+          <div class="seg" role="group" aria-label="Patching strategy">
+            <button type="button" data-mode="entropy" aria-pressed="true">Entropy-guided (EntroPE)</button>
+            <button type="button" data-mode="fixed" aria-pressed="false">Fixed-length</button>
+          </div>
+          <button class="icon-btn" type="button" data-replay>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+            Replay scan
+          </button>
+        </div>
+        <div class="demo-body">
+          <div class="demo-main">
+            <svg id="ep-main" viewBox="0 0 760 300" role="img" aria-label="Animated illustration: a time series split into patches, with a next-step entropy curve and threshold underneath. Entropy-guided boundaries sit at transitions; fixed-length boundaries ignore them."></svg>
+            <div class="demo-legend" aria-hidden="true">
+              <span><i style="background:#18232d"></i>signal</span>
+              <span><i class="box" style="background:#e9eef0;border:1px solid #cfd6da"></i>patch</span>
+              <span><i style="background:#0f6b5c"></i>entropy-guided boundary</span>
+              <span><i style="background:#b4442a"></i>fixed boundary / threshold</span>
+              <span><i style="background:#b5641c"></i>entropy</span>
+            </div>
+          </div>
+          <aside class="demo-side">
+            <div class="slider-row" id="ep-alpha-row">
+              <label for="ep-alpha"><span>Entropy threshold</span><strong id="ep-alpha-val">94th</strong></label>
+              <input type="range" id="ep-alpha" min="0.88" max="0.98" step="0.01" value="0.94">
+              <span class="muted" style="font-size:.74rem">percentile of hₜ in this window (the paper's α)</span>
+            </div>
+            <div>
+              <h4>Current patching</h4>
+              <dl class="readout" style="margin-top:.5rem">
+                <dt>Patches</dt><dd id="ep-patches">–</dd>
+                <dt>Mean patch length</dt><dd id="ep-length">–</dd>
+                <dt>High-entropy points inside a patch</dt><dd id="ep-cut">–</dd>
+              </dl>
+            </div>
+            <div>
+              <h4>Within-patch variance ratio ↓</h4>
+              <dl class="readout" style="margin-top:.5rem">
+                <dt>Entropy-guided</dt><dd id="ep-ratio-e" class="good">–</dd>
+                <dt>Fixed, same patch count</dt><dd id="ep-ratio-f" class="bad">–</dd>
+                <dt>More homogeneous by</dt><dd id="ep-gain">–</dd>
+              </dl>
+            </div>
+          </aside>
+        </div>
+        <p class="demo-caption" id="ep-caption" aria-live="polite"></p>
+        <p class="demo-foot">Interactive sketch on a synthetic signal with a toy entropy estimator. It shows the mechanism; the numbers are for this window only. The paper measures 2.8× lower within-patch variance across 6 real datasets.</p>
+      </div>
+
+      <p class="tldr reveal" style="margin-top:2rem">
+        <b>TL;DR.</b> Patch-based transformers chop time series into fixed windows that often cut straight through a transition.
+        EntroPE asks a tiny frozen model <em>“how unpredictable is the next step?”</em> and starts a new patch wherever the answer is “very”.
+        Patches then follow the signal's own structure, which improves forecasting, classification, and anomaly detection while using far fewer parameters.
       </p>
-      <p class="project-byline">Sachith Abeywickrama, Emadeldeen Eldele, Min Wu, Xiaoli Li, and Chau Yuen</p>
-      <div class="project-actions">
-        <a class="btn btn-primary" href="../papers/EntroPE.pdf">Read the paper</a>
-        <a class="btn btn-ghost" href="https://github.com/Sachithx/EntroPE" target="_blank" rel="noopener noreferrer">View code</a>
-      </div>
 
-      <div class="project-metrics" aria-label="EntroPE headline results">
-        <div class="project-metric">
-          <strong>9.7%</strong>
-          <span>average MSE reduction against PatchTST across six forecasting benchmarks</span>
-        </div>
-        <div class="project-metric">
-          <strong>77.13%</strong>
-          <span>average classification accuracy across 10 UEA datasets</span>
-        </div>
-        <div class="project-metric">
-          <strong>87.72%</strong>
-          <span>average anomaly-detection F1 across five benchmarks</span>
-        </div>
+      <div class="stats" aria-label="Headline results">
+        <div class="stat"><div class="stat-value" data-count="3.2" data-decimals="1" data-suffix="%">3.2%</div><p class="stat-label">lower average MSE than PatchTST across 8 forecasting datasets</p></div>
+        <div class="stat"><div class="stat-value" data-count="90.9" data-decimals="1" data-suffix="%">90.9%</div><p class="stat-label">fewer parameters than PatchTST (and 78.5% fewer MACs)</p></div>
+        <div class="stat"><div class="stat-value" data-count="2.8" data-decimals="1" data-suffix="×">2.8×</div><p class="stat-label">more internally homogeneous patches than fixed patching</p></div>
+        <div class="stat"><div class="stat-value" data-count="97.2" data-decimals="1" data-suffix="%">97.2%</div><p class="stat-label">of detected boundaries fall at high-uncertainty positions</p></div>
       </div>
     </section>
 
-    <section class="project-section" id="motivation">
-      <div class="project-section-head">
-        <span class="section-number">01</span>
-        <div>
-          <p class="project-kicker">Motivation</p>
-          <h2>Fixed windows ignore where patterns actually change.</h2>
-        </div>
-      </div>
-      <div class="project-two-col">
-        <div class="project-copy">
-          <p>
-            Patch-based transformers make long sequences tractable by grouping nearby time points into tokens.
-            Most methods use a fixed patch length, however, so their boundaries are determined by the starting index
-            rather than the signal. A trend reversal, volatility burst, or seasonal transition can be split across tokens.
-          </p>
-          <p>
-            This fragmentation weakens the local representation and can create a train-inference mismatch: training
-            exposes the model to many temporal offsets, while inference extracts patches from predetermined positions.
-            <strong>The patcher should follow the predictive structure of the sequence, not the clock.</strong>
-          </p>
-        </div>
-        <aside class="insight-card">
-          <p class="insight-label">Core idea</p>
-          <h3>Put a boundary where the past stops explaining the future.</h3>
-          <p>
-            High conditional entropy marks a natural transition. Cutting there keeps patch interiors more coherent
-            and turns temporal resolution into an adaptive, sample-specific choice.
-          </p>
-        </aside>
+    <section class="paper-section" id="abstract">
+      <h2>Abstract</h2>
+      <div class="prose reveal" style="margin-top:1.25rem">
+        <p>
+          Patch-based transformers have emerged as efficient, improved architectures for long-horizon time series modeling. Yet existing
+          approaches rely on temporally-agnostic patch construction, in which arbitrary starting positions and fixed lengths fracture
+          temporal coherence by splitting natural transitions across patch boundaries. This naive segmentation often disrupts short-term
+          dependencies and weakens representation learning.
+        </p>
+        <p>
+          We propose a novel <strong>Entropy-Guided Dynamic Patch Encoder (EntroPE)</strong>, a temporally informed framework that
+          dynamically detects transition points via conditional entropy and dynamically places patch boundaries. This preserves temporal
+          structure while retaining the computational benefits of patching. EntroPE consists of 2 key modules, namely an Entropy-Guided
+          Dynamic Patcher (EDP) that applies information-theoretic criteria to locate natural temporal shifts and determine patch boundaries,
+          and an Adaptive Patch Encoder (APE) that employs pooling and cross-attention to capture intra-patch dependencies and produce
+          fixed-size latent representations.
+        </p>
+        <p>
+          Extensive experiments on long-term forecasting, classification, and anomaly detection demonstrate that the proposed method
+          improves both accuracy and efficiency, establishing entropy-guided dynamic patching as a promising new paradigm for time series modeling.
+        </p>
       </div>
     </section>
 
-    <section class="project-section" id="method">
-      <div class="project-section-head">
-        <span class="section-number">02</span>
-        <div>
-          <p class="project-kicker">Method</p>
-          <h2>Dynamic boundaries with fixed-size representations.</h2>
-        </div>
-      </div>
-      <div class="method-grid">
-        <article class="method-step">
-          <h3>Learn uncertainty</h3>
-          <p>A roughly 10K-parameter causal transformer predicts the next quantized value. After pretraining, it is frozen and used only to estimate conditional entropy.</p>
-        </article>
-        <article class="method-step">
-          <h3>Detect transitions</h3>
-          <p>Sample-adaptive quantiles flag positions with both high entropy and a sharp entropy change. Consecutive cuts are suppressed to form non-overlapping variable-length patches.</p>
-        </article>
-        <article class="method-step">
-          <h3>Encode each patch</h3>
-          <p>Pooling initializes a fixed-size patch token; cross-attention then lets that token query only the time points inside its own patch, preserving local detail.</p>
-        </article>
-        <article class="method-step">
-          <h3>Fuse local and global</h3>
-          <p>A global transformer models relations between patches. A fusion decoder sends global patch context back to time-point representations before the task head predicts.</p>
-        </article>
-      </div>
-      <p class="method-caption">
-        Quantization is used only by the entropy model. Forecasting, classification, and anomaly heads operate on continuous representations, avoiding a quantized output range.
-      </p>
-    </section>
-
-    <section class="project-section" id="results">
-      <div class="project-section-head">
-        <span class="section-number">03</span>
-        <div>
-          <p class="project-kicker">Performance</p>
-          <h2>Better patches improve three different tasks.</h2>
-        </div>
-      </div>
-
-      <div class="results-grid">
-        <article class="result-card">
-          <p class="result-value">20%</p>
-          <h3>Lower ETTh1 MSE</h3>
-          <p>Average MSE across four forecast horizons falls from 0.516 with PatchTST to 0.416 with EntroPE.</p>
-        </article>
-        <article class="result-card">
-          <p class="result-value">+6.0 pts</p>
-          <h3>Classification over PatchTST</h3>
-          <p>UEA average accuracy is 77.13%, compared with 71.14% for PatchTST and 76.03% for TSLANet.</p>
-        </article>
-        <article class="result-card">
-          <p class="result-value">1-3%</p>
-          <h3>Dynamic-patching overhead</h3>
-          <p>Measured epoch-time overhead stays small across the six forecasting datasets, while patch count remains adaptive.</p>
-        </article>
-      </div>
-
-      <div class="results-table-wrap">
-        <table class="results-table">
-          <caption>Forecasting MSE averaged over horizons 96, 192, 336, and 720 with input length 96. Lower is better.</caption>
-          <thead>
-            <tr>
-              <th scope="col">Dataset</th>
-              <th scope="col">PatchTST</th>
-              <th scope="col">EntroPE</th>
-              <th scope="col">Relative MSE reduction</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row">ETTh1</th><td>0.516</td><td><strong>0.416</strong></td><td>19%</td></tr>
-            <tr><th scope="row">ETTh2</th><td>0.391</td><td><strong>0.366</strong></td><td>6%</td></tr>
-            <tr><th scope="row">ETTm1</th><td>0.406</td><td><strong>0.378</strong></td><td>7%</td></tr>
-            <tr><th scope="row">ETTm2</th><td>0.290</td><td><strong>0.286</strong></td><td>1%</td></tr>
-            <tr><th scope="row">Weather</th><td>0.265</td><td><strong>0.242</strong></td><td>9%</td></tr>
-            <tr><th scope="row">Electricity</th><td>0.216</td><td><strong>0.182</strong></td><td>16%</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="project-note">The 9.7% headline is the mean of the six dataset-level relative MSE reductions shown above; it is not an absolute error-point reduction.</p>
-    </section>
-
-    <section class="project-section" id="scope">
-      <div class="project-section-head">
-        <span class="section-number">04</span>
-        <div>
-          <p class="project-kicker">What the results show</p>
-          <h2>Boundary placement is a useful modeling decision, not preprocessing trivia.</h2>
-        </div>
-      </div>
-      <div class="project-two-col">
-        <div class="project-copy">
+    <section class="paper-section" id="problem">
+      <h2>Why fixed patches fall short</h2>
+      <p class="section-sub">Boundaries should sit where the past stops being enough to predict the future.</p>
+      <div class="fig-pair" style="align-items:center">
+        <div class="prose reveal" style="text-align:left">
           <p>
-            Component ablations degrade progressively as dynamic patching, the adaptive encoder, and the fusion
-            decoder are removed. Dynamic patches also outperform fixed lengths in most evaluated forecasting settings,
-            while the entropy percentile remains stable over a broad 15%-95% range.
+            Fixed-length patching treats time as homogeneous. This causes two problems. First, <strong>fragmentation</strong>: a trend
+            change or seasonal transition gets split across patches, separating related time points. Second, a
+            <strong>train–inference mismatch</strong>: training sees patches at many offsets relative to the underlying patterns,
+            while inference uses fixed positions.
           </p>
           <p>
-            The threshold doubles as an efficiency control: lowering it yields finer segmentation and more computation;
-            raising it creates fewer patches. This makes the accuracy-cost tradeoff explicit rather than hidden in a fixed patch size.
+            EntroPE places boundaries at moments of high <strong>conditional entropy</strong> of the next observation given its history.
+            Regime changes land on patch boundaries, while patch interiors stay predictable and coherent.
           </p>
         </div>
-        <ul class="scope-list">
-          <li><strong>Predictive, not semantic, boundaries</strong>An entropy peak signals uncertainty; it does not guarantee a human-named event boundary.</li>
-          <li><strong>Channel-independent backbone</strong>Each variable is patched and encoded independently before task-level aggregation.</li>
-          <li><strong>Frozen boundary model</strong>The entropy model is pretrained once, then held fixed while downstream task components learn.</li>
-        </ul>
+        <figure class="fig narrow reveal" style="margin:0 auto">
+          <a href="../assets/research/entrope/fig1-patching.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig1-patching.png" alt="Top: fixed-length patching with boundaries cutting through peaks. Bottom: temporally informed patching with boundaries at entropy peaks, and a time series coloured by entropy." width="512" height="659" loading="lazy"></a>
+          <figcaption><b>Figure 1.</b> (A) Fixed-length patches fragment coherent patterns. (B) EntroPE puts boundaries at entropy peaks.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="paper-section" id="method">
+      <h2>Method</h2>
+      <p class="section-sub">A lightweight entropy model decides where to cut; the rest of the network learns from variable-length patches.</p>
+      <div class="module-grid four">
+        <article class="module reveal">
+          <span class="module-num">0</span>
+          <h3>Frozen entropy model</h3>
+          <p>A 2-layer GPT-style transformer (about 16K parameters) learns next-token prediction on quantized values, then is frozen. Quantization is used only to estimate entropy.</p>
+        </article>
+        <article class="module reveal">
+          <span class="module-num">1</span>
+          <h3>Entropy-guided dynamic patcher</h3>
+          <p>A new patch starts after positions whose entropy, or rise in entropy, exceeds a per-sample α-quantile. Boundaries can be precomputed and add about 0.1–1.0 s per training epoch.</p>
+        </article>
+        <article class="module reveal">
+          <span class="module-num">2</span>
+          <h3>Adaptive patch encoder</h3>
+          <p>Max-pooling initialises each patch embedding; cross-attention over the patch's own time points refines it into a fixed-size vector, whatever the patch length.</p>
+        </article>
+        <article class="module reveal">
+          <span class="module-num">3</span>
+          <h3>Global transformer and fusion decoder</h3>
+          <p>A transformer models dependencies between patches, and the fusion decoder injects that context back into token states. Predictions stay continuous.</p>
+        </article>
+      </div>
+      <figure class="fig reveal">
+        <a href="../assets/research/entrope/fig2-architecture.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig2-architecture.png" alt="EntroPE architecture: channel independence, tokenizer, entropy-guided patcher, adaptive patch encoder, global transformer, fusion decoder, and linear head, with detail panels for the patcher, encoder, and decoder." width="1124" height="651" loading="lazy"></a>
+        <figcaption><b>Figure 2.</b> EntroPE architecture. (A) The EDP uses a frozen causal transformer to estimate next-token entropy and select boundaries. (B) The APE turns variable-length patches into fixed-size embeddings. (C) The fusion decoder combines global patch context with local time-point representations.</figcaption>
+      </figure>
+    </section>
+
+    <section class="paper-section" id="results">
+      <h2>Results</h2>
+      <p class="section-sub">One backbone for forecasting, classification, and anomaly detection; only the task head changes.</p>
+
+      <div class="chart-grid three">
+        <div class="chart chart-tall" role="figure" aria-label="Long-term forecasting average MSE">
+          <h3>Long-term forecasting</h3>
+          <p class="chart-sub">Average MSE over 8 datasets and 4 horizons (input length 96). Further left is better.</p>
+          <ul class="dots">
+            <li class="ours" title="EntroPE: 0.330"><span class="name">EntroPE</span><span class="track"><span class="dot" style="--x:11.11%"></span></span><span class="val">0.330</span></li>
+            <li title="CALF: 0.333"><span class="name">CALF</span><span class="track"><span class="dot" style="--x:14.44%"></span></span><span class="val">0.333</span></li>
+            <li title="TimeMosaic: 0.336"><span class="name">TimeMosaic</span><span class="track"><span class="dot" style="--x:17.78%"></span></span><span class="val">0.336</span></li>
+            <li title="iTransformer: 0.337"><span class="name">iTransformer</span><span class="track"><span class="dot" style="--x:18.89%"></span></span><span class="val">0.337</span></li>
+            <li title="FilterTS: 0.339"><span class="name">FilterTS</span><span class="track"><span class="dot" style="--x:21.11%"></span></span><span class="val">0.339</span></li>
+            <li title="TSLANet: 0.340"><span class="name">TSLANet</span><span class="track"><span class="dot" style="--x:22.22%"></span></span><span class="val">0.340</span></li>
+            <li title="TimeMixer: 0.341"><span class="name">TimeMixer</span><span class="track"><span class="dot" style="--x:23.33%"></span></span><span class="val">0.341</span></li>
+            <li title="PatchTST: 0.341"><span class="name">PatchTST</span><span class="track"><span class="dot" style="--x:23.33%"></span></span><span class="val">0.341</span></li>
+            <li title="HDMixer: 0.353"><span class="name">HDMixer</span><span class="track"><span class="dot" style="--x:36.67%"></span></span><span class="val">0.353</span></li>
+            <li title="FEDformer: 0.381"><span class="name">FEDformer</span><span class="track"><span class="dot" style="--x:67.78%"></span></span><span class="val">0.381</span></li>
+            <li title="Time-FFM: 0.383"><span class="name">Time-FFM</span><span class="track"><span class="dot" style="--x:70.00%"></span></span><span class="val">0.383</span></li>
+            <li title="TimesNet: 0.388"><span class="name">TimesNet</span><span class="track"><span class="dot" style="--x:75.56%"></span></span><span class="val">0.388</span></li>
+            <li title="TimeBase: 0.401"><span class="name">TimeBase</span><span class="track"><span class="dot" style="--x:90.00%"></span></span><span class="val">0.401</span></li>
+            <li title="DLinear: 0.403"><span class="name">DLinear</span><span class="track"><span class="dot" style="--x:92.22%"></span></span><span class="val">0.403</span></li>
+          </ul>
+          <div class="axis" aria-hidden="true"><span></span><span class="ticks"><span style="--x:0%">0.32</span><span style="--x:33.3333%">0.35</span><span style="--x:66.6667%">0.38</span><span style="--x:100%">0.41</span></span><span></span></div>
+          <p class="chart-note">EntroPE is best on 6 of 9 columns of Table 1, including the overall average. It stays competitive with CALF (~180M parameters) and TimeMosaic (~8M) using ≤0.8M.</p>
+        </div>
+
+        <div class="chart" role="figure" aria-label="UEA classification average accuracy">
+          <h3>Classification (14 UEA datasets)</h3>
+          <p class="chart-sub">Average accuracy (%).</p>
+          <ul class="dots">
+            <li class="ours" title="EntroPE: 76.01%"><span class="name">EntroPE</span><span class="track"><span class="dot" style="--x:80.05%"></span></span><span class="val">76.01</span></li>
+            <li title="TSLANet: 72.65%"><span class="name">TSLANet</span><span class="track"><span class="dot" style="--x:63.25%"></span></span><span class="val">72.65</span></li>
+            <li title="TS-TCC: 70.98%"><span class="name">TS-TCC</span><span class="track"><span class="dot" style="--x:54.90%"></span></span><span class="val">70.98</span></li>
+            <li title="PatchTST: 68.53%"><span class="name">PatchTST</span><span class="track"><span class="dot" style="--x:42.65%"></span></span><span class="val">68.53</span></li>
+            <li title="GPT4TS: 66.72%"><span class="name">GPT4TS</span><span class="track"><span class="dot" style="--x:33.60%"></span></span><span class="val">66.72</span></li>
+            <li title="ROCKET: 65.18%"><span class="name">ROCKET</span><span class="track"><span class="dot" style="--x:25.90%"></span></span><span class="val">65.18</span></li>
+          </ul>
+          <div class="axis" aria-hidden="true"><span></span><span class="ticks"><span style="--x:0%">60</span><span style="--x:25%">65</span><span style="--x:50%">70</span><span style="--x:75%">75</span><span style="--x:100%">80</span></span><span></span></div>
+        </div>
+
+        <div class="chart" role="figure" aria-label="Anomaly detection average F1">
+          <h3>Anomaly detection (5 benchmarks)</h3>
+          <p class="chart-sub">Average F1 (%) on SMD, MSL, SMAP, SWaT, and PSM.</p>
+          <ul class="dots">
+            <li class="ours" title="EntroPE: 88.47"><span class="name">EntroPE</span><span class="track"><span class="dot" style="--x:84.70%"></span></span><span class="val">88.47</span></li>
+            <li title="TSLANet: 87.54"><span class="name">TSLANet</span><span class="track"><span class="dot" style="--x:75.40%"></span></span><span class="val">87.54</span></li>
+            <li title="GPT4TS: 86.72"><span class="name">GPT4TS</span><span class="track"><span class="dot" style="--x:67.20%"></span></span><span class="val">86.72</span></li>
+            <li title="TimesNet: 85.24"><span class="name">TimesNet</span><span class="track"><span class="dot" style="--x:52.40%"></span></span><span class="val">85.24</span></li>
+            <li title="FEDformer: 84.97"><span class="name">FEDformer</span><span class="track"><span class="dot" style="--x:49.70%"></span></span><span class="val">84.97</span></li>
+            <li title="LightTS: 84.23"><span class="name">LightTS</span><span class="track"><span class="dot" style="--x:42.30%"></span></span><span class="val">84.23</span></li>
+            <li title="ETSformer: 82.87"><span class="name">ETSformer</span><span class="track"><span class="dot" style="--x:28.70%"></span></span><span class="val">82.87</span></li>
+            <li title="PatchTST: 82.79"><span class="name">PatchTST</span><span class="track"><span class="dot" style="--x:27.90%"></span></span><span class="val">82.79</span></li>
+            <li title="DLinear: 82.46"><span class="name">DLinear</span><span class="track"><span class="dot" style="--x:24.60%"></span></span><span class="val">82.46</span></li>
+          </ul>
+          <div class="axis" aria-hidden="true"><span></span><span class="ticks"><span style="--x:0%">80</span><span style="--x:50%">85</span><span style="--x:100%">90</span></span><span></span></div>
+        </div>
+      </div>
+
+      <div class="callout reveal">
+        <div class="callout-num">1st of 7</div>
+        <p><strong>Entropy is the best boundary signal tested.</strong> With the architecture held fixed, conditional predictive entropy gives lower MSE than variance change-point, spectral shift, CUSUM, local difference, empirical Shannon entropy, and static boundaries on ETTm1, ETTh2, and Weather. Removing the dynamic patcher costs more than removing the encoder or decoder.</p>
+      </div>
+
+      <figure class="fig reveal">
+        <a href="../assets/research/entrope/fig8-qualitative.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig8-qualitative.png" alt="Entropy-guided patch placement on example windows from ETTm1, Weather, and Solar at input lengths 96 and 336, with signals above and entropy curves below." width="1124" height="362" loading="lazy"></a>
+        <figcaption><b>Figure 8.</b> Entropy-guided patches on real windows from ETTm1, Weather, and Solar. Boundaries cluster around bursts of activity and stay sparse across long, flat, low-information stretches, so computation goes where the information is.</figcaption>
+      </figure>
+
+      <div class="fig-pair" style="margin-top:1.75rem">
+        <figure class="fig reveal">
+          <a href="../assets/research/entrope/fig4-boundary-ablation.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig4-boundary-ablation.png" alt="Bar charts of test MSE for seven boundary signals on ETTm1, ETTh2, and Weather; conditional predictive entropy is lowest in each." width="1124" height="273" loading="lazy"></a>
+          <figcaption><b>Figure 4.</b> Boundary-signal ablation with a matched architecture.</figcaption>
+        </figure>
+        <figure class="fig reveal">
+          <a href="../assets/research/entrope/fig6-efficiency.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig6-efficiency.png" alt="Left: ETT-family average MSE versus MACs per sample, with EntroPE at the low-error end of the Pareto frontier. Right: test MSE versus inference latency for dynamic and fixed patching." width="1124" height="367" loading="lazy"></a>
+          <figcaption><b>Figures 6–7.</b> Accuracy versus compute (~42M MACs per sample) and versus latency, compared with fixed patch lengths.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="paper-section" id="limitations">
+      <h2>Limitations</h2>
+      <ul class="limits">
+        <li class="reveal"><strong>Gains depend on the setting</strong>Improvements are small and mixed on M4-Monthly, and static patching wins on Solar for some model sizes and horizons.</li>
+        <li class="reveal"><strong>Sensitivity to noise</strong>On ETTh1, overlap with clean-signal boundaries drops from 0.63 at 40 dB SNR to 0.28 at 2 dB, despite a stable boundary count.</li>
+        <li class="reveal"><strong>Dataset-specific estimator</strong>The entropy model may need retraining under domain shift.</li>
+        <li class="reveal"><strong>Channel independence</strong>Per-channel segmentation can miss transitions that happen across channels together; strongly periodic data may suit simpler period-based patching.</li>
+      </ul>
+    </section>
+
+    <section class="paper-section" id="bibtex">
+      <h2>BibTeX</h2>
+      <div class="bib-wrap">
+        <pre class="code-block"><button class="copy-btn" type="button">Copy</button><code>@inproceedings{abeywickrama2026entrope,
+  title     = {Entropy Guided Dynamic Patch Segmentation
+               for Time Series Transformers},
+  author    = {Abeywickrama, Sachith and Eldele, Emadeldeen and Wu, Min
+               and Li, Xiaoli and Yuen, Chau},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026}
+}</code></pre>
       </div>
     </section>
 
     <aside class="project-navigation" aria-labelledby="more-work">
       <h2 id="more-work">More research</h2>
       <div class="project-nav-grid">
-        <a class="project-nav-card" href="concepttime.html"><span>Interpretable time-series</span><strong>ConceptTime →</strong></a>
+        <a class="project-nav-card" href="concepttime.html"><span>NeurIPS 2026 · Interpretable time series</span><strong>ConceptTime →</strong></a>
         <a class="project-nav-card" href="pact.html"><span>Continual adaptation</span><strong>PACT →</strong></a>
         <a class="project-nav-card" href="neurinferno.html"><span>Protocol inference</span><strong>NeurInferno →</strong></a>
       </div>
@@ -212,9 +328,10 @@
 
   <footer class="site-footer">
     <p>© <span id="year"></span> Sachith Abeywickrama</p>
-    <p class="muted">NTU · A*STAR I<sup>2</sup>R · Singapore</p>
+    <p><a href="../index.html">Home</a> · <a href="../index.html#publications">Publications</a></p>
   </footer>
 
   <script src="../script.js"></script>
+  <script src="../assets/js/demos.js"></script>
 </body>
 </html>

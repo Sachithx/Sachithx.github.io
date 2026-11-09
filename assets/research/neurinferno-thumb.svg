@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" role="img" aria-label="Rows of raw protocol bytes compared across messages, with inferred field boundaries drawn between byte columns.">
+  <style>
+    .cell { fill: #ffffff; stroke: #e2e6e8; stroke-width: 1; }
+    .const { fill: #e7f2ef; }
+    .len { fill: #fbf0e2; }
+    .hex { font: 500 8.5px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #3b4955; text-anchor: middle; }
+    .label { font: 600 10px Inter, system-ui, sans-serif; fill: #687681; letter-spacing: .04em; }
+    .b { stroke: #0f6b5c; stroke-width: 2; transform-box: fill-box; transform-origin: top; animation: grow 4.5s ease-in-out infinite; }
+    @keyframes grow { 0%, 10% { transform: scaleY(0); } 35%, 85% { transform: scaleY(1); } 100% { transform: scaleY(0); } }
+    @media (prefers-reduced-motion: reduce) { .b { animation: none; } }
+  </style>
+  <rect width="300" height="200" fill="#ffffff"/>
+  <text x="14" y="20" class="label">SAME-FORMAT MESSAGES · RAW BYTES</text>
+  <g transform="translate(14 32)">
+    <!-- 6 messages x 12 bytes; columns 0-1 constant, 2 length, 3-6 varying, 7 constant, 8-11 varying -->
+    <g id="cells">
+      <rect class="cell const" x="0" y="0" width="22" height="22"/><rect class="cell const" x="22" y="0" width="22" height="22"/><rect class="cell len" x="44" y="0" width="22" height="22"/><rect class="cell" x="66" y="0" width="22" height="22"/><rect class="cell" x="88" y="0" width="22" height="22"/><rect class="cell" x="110" y="0" width="22" height="22"/><rect class="cell" x="132" y="0" width="22" height="22"/><rect class="cell const" x="154" y="0" width="22" height="22"/><rect class="cell" x="176" y="0" width="22" height="22"/><rect class="cell" x="198" y="0" width="22" height="22"/><rect class="cell" x="220" y="0" width="22" height="22"/><rect class="cell" x="242" y="0" width="22" height="22"/>
+    </g>
+    <use href="#cells" y="24"/><use href="#cells" y="48"/><use href="#cells" y="72"/><use href="#cells" y="96"/><use href="#cells" y="120"/>
+    <g class="hex">
+      <text x="11" y="14">7E</text><text x="33" y="14">01</text><text x="55" y="14">0C</text><text x="77" y="14">A3</text><text x="99" y="14">5F</text><text x="121" y="14">10</text><text x="143" y="14">9B</text><text x="165" y="14">FF</text><text x="187" y="14">2C</text><text x="209" y="14">E0</text><text x="231" y="14">47</text><text x="253" y="14">1A</text>
+      <text x="11" y="38">7E</text><text x="33" y="38">01</text><text x="55" y="38">0A</text><text x="77" y="38">B8</text><text x="99" y="38">02</text><text x="121" y="38">6D</text><text x="143" y="38">31</text><text x="165" y="38">FF</text><text x="187" y="38">90</text><text x="209" y="38">0E</text><text x="231" y="38">C4</text><text x="253" y="38">77</text>
+      <text x="11" y="62">7E</text><text x="33" y="62">01</text><text x="55" y="62">10</text><text x="77" y="62">4C</text><text x="99" y="62">E9</text><text x="121" y="62">03</text><text x="143" y="62">D2</text><text x="165" y="62">FF</text><text x="187" y="62">5B</text><text x="209" y="62">A1</text><text x="231" y="62">08</text><text x="253" y="62">F3</text>
+      <text x="11" y="86">7E</text><text x="33" y="86">01</text><text x="55" y="86">0C</text><text x="77" y="86">17</text><text x="99" y="86">80</text><text x="121" y="86">BE</text><text x="143" y="86">44</text><text x="165" y="86">FF</text><text x="187" y="86">C9</text><text x="209" y="86">36</text><text x="231" y="86">5E</text><text x="253" y="86">02</text>
+      <text x="11" y="110">7E</text><text x="33" y="110">01</text><text x="55" y="110">0E</text><text x="77" y="110">F0</text><text x="99" y="110">2A</text><text x="121" y="110">71</text><text x="143" y="110">0D</text><text x="165" y="110">FF</text><text x="187" y="110">13</text><text x="209" y="110">DA</text><text x="231" y="110">96</text><text x="253" y="110">4B</text>
+      <text x="11" y="134">7E</text><text x="33" y="134">01</text><text x="55" y="134">0B</text><text x="77" y="134">6A</text><text x="99" y="134">C3</text><text x="121" y="134">58</text><text x="143" y="134">E7</text><text x="165" y="134">FF</text><text x="187" y="134">81</text><text x="209" y="134">2F</text><text x="231" y="134">B5</text><text x="253" y="134">60</text>
+    </g>
+    <!-- inferred field boundaries -->
+    <line class="b" x1="44" y1="-6" x2="44" y2="150"/>
+    <line class="b" x1="66" y1="-6" x2="66" y2="150" style="animation-delay:.25s"/>
+    <line class="b" x1="154" y1="-6" x2="154" y2="150" style="animation-delay:.5s"/>
+    <line class="b" x1="176" y1="-6" x2="176" y2="150" style="animation-delay:.75s"/>
+  </g>
+</svg>
