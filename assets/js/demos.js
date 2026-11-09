@@ -71,7 +71,7 @@
           fn();
         }
       },
-      { threshold: 0.35 }
+      { threshold: 0.15 }
     );
     io.observe(node);
   };
@@ -588,11 +588,10 @@
     const replay = root.querySelector("[data-replay]");
     if (replay) replay.addEventListener("click", () => autoplay(1));
 
+    // Show the raw signal straight away so the card is never empty, then
+    // animate through the pipeline once the demo scrolls into view.
     goTo(reduceMotion ? 6 : 1, false);
-    if (!reduceMotion) {
-      sigPath.style.opacity = 0;
-      onFirstView(root, () => autoplay(1));
-    }
+    if (!reduceMotion) onFirstView(root, () => autoplay(1));
     root.dataset.ready = "true";
     root.dataset.debug = JSON.stringify({
       cleanF: states.clean.F.toFixed(3),
