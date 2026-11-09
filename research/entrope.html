@@ -173,7 +173,7 @@
           </p>
         </div>
         <figure class="fig narrow reveal" style="margin:0 auto">
-          <a href="../assets/research/entrope/fig1-patching.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig1-patching.png" alt="Top: fixed-length patching with boundaries cutting through peaks. Bottom: temporally informed patching with boundaries at entropy peaks, and a time series coloured by entropy." width="512" height="659" loading="lazy"></a>
+          <a href="../assets/research/entrope/fig1-patching.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig1-patching.png" alt="Top: fixed-length patching with boundaries cutting through peaks. Bottom: temporally informed patching with boundaries at entropy peaks, and a time series coloured by entropy." width="1100" height="1421" loading="lazy"></a>
           <figcaption><b>Figure 1.</b> (A) Fixed-length patches fragment coherent patterns. (B) EntroPE puts boundaries at entropy peaks.</figcaption>
         </figure>
       </div>
@@ -205,7 +205,7 @@
         </article>
       </div>
       <figure class="fig reveal">
-        <a href="../assets/research/entrope/fig2-architecture.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig2-architecture.png" alt="EntroPE architecture: channel independence, tokenizer, entropy-guided patcher, adaptive patch encoder, global transformer, fusion decoder, and linear head, with detail panels for the patcher, encoder, and decoder." width="1124" height="651" loading="lazy"></a>
+        <a href="../assets/research/entrope/fig2-architecture.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig2-architecture.png" alt="EntroPE architecture: channel independence, tokenizer, entropy-guided patcher, adaptive patch encoder, global transformer, fusion decoder, and linear head, with detail panels for the patcher, encoder, and decoder." width="2000" height="1323" loading="lazy"></a>
         <figcaption><b>Figure 2.</b> EntroPE architecture. (A) The EDP uses a frozen causal transformer to estimate next-token entropy and select boundaries. (B) The APE turns variable-length patches into fixed-size embeddings. (C) The fusion decoder combines global patch context with local time-point representations.</figcaption>
       </figure>
     </section>
@@ -276,18 +276,23 @@
       </div>
 
       <figure class="fig reveal">
-        <a href="../assets/research/entrope/fig8-qualitative.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig8-qualitative.png" alt="Entropy-guided patch placement on example windows from ETTm1, Weather, and Solar at input lengths 96 and 336, with signals above and entropy curves below." width="1124" height="362" loading="lazy"></a>
+        <a href="../assets/research/entrope/fig8-qualitative.svg" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig8-qualitative.svg" alt="Entropy-guided patch placement on example windows from ETTm1, Weather, and Solar at input lengths 96 and 336, with signals above and entropy curves below." width="1894" height="608" loading="lazy"></a>
         <figcaption><b>Figure 8.</b> Entropy-guided patches on real windows from ETTm1, Weather, and Solar. Boundaries cluster around bursts of activity and stay sparse across long, flat, low-information stretches, so computation goes where the information is.</figcaption>
+      </figure>
+
+      <figure class="fig reveal">
+        <a href="../assets/research/entrope/fig4-boundary-ablation.svg" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig4-boundary-ablation.svg" alt="Bar charts of test MSE for seven boundary signals on ETTm1, ETTh2, and Weather; conditional predictive entropy is lowest in each." width="1139" height="258" loading="lazy"></a>
+        <figcaption><b>Figure 4.</b> Boundary-signal ablation with a matched architecture: only the boundary rule changes.</figcaption>
       </figure>
 
       <div class="fig-pair" style="margin-top:1.75rem">
         <figure class="fig reveal">
-          <a href="../assets/research/entrope/fig4-boundary-ablation.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig4-boundary-ablation.png" alt="Bar charts of test MSE for seven boundary signals on ETTm1, ETTh2, and Weather; conditional predictive entropy is lowest in each." width="1124" height="273" loading="lazy"></a>
-          <figcaption><b>Figure 4.</b> Boundary-signal ablation with a matched architecture.</figcaption>
+          <a href="../assets/research/entrope/fig6-efficiency.svg" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig6-efficiency.svg" alt="ETT-family average MSE versus MACs per sample on a log scale, with bubble size showing parameters; EntroPE sits at the low-error end of the Pareto frontier." width="720" height="468" loading="lazy"></a>
+          <figcaption><b>Figure 6.</b> ETT-family average MSE versus counted MACs per sample (~42M for EntroPE). Bubble size shows parameter count.</figcaption>
         </figure>
         <figure class="fig reveal">
-          <a href="../assets/research/entrope/fig6-efficiency.png" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig6-efficiency.png" alt="Left: ETT-family average MSE versus MACs per sample, with EntroPE at the low-error end of the Pareto frontier. Right: test MSE versus inference latency for dynamic and fixed patching." width="1124" height="367" loading="lazy"></a>
-          <figcaption><b>Figures 6–7.</b> Accuracy versus compute (~42M MACs per sample) and versus latency, compared with fixed patch lengths.</figcaption>
+          <a href="../assets/research/entrope/fig7-latency.svg" target="_blank" rel="noopener"><img src="../assets/research/entrope/fig7-latency.svg" alt="Test MSE versus inference latency on ETTm1, Weather, and Solar for fixed patch lengths and for EntroPE's dynamic patching." width="720" height="468" loading="lazy"></a>
+          <figcaption><b>Figure 7.</b> Test MSE versus inference latency for dynamic patching and fixed patch lengths 1–12, including entropy estimation time.</figcaption>
         </figure>
       </div>
     </section>

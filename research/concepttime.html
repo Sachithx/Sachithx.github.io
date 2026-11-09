@@ -179,7 +179,7 @@
         </p>
       </div>
       <figure class="fig reveal">
-        <a href="../assets/research/concepttime/fig1-overview.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig1-overview.png" alt="Left: a triangle of accuracy, interpretability, and calibrated abstention, with ConceptTime at the centre. Right: four segments A to D shown in a shape-based space and in a predictive-geometry space spanned by predictive variance and NLL." width="1124" height="329" loading="lazy"></a>
+        <a href="../assets/research/concepttime/fig1-overview.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig1-overview.png" alt="Left: a triangle of accuracy, interpretability, and calibrated abstention, with ConceptTime at the centre. Right: four segments A to D shown in a shape-based space and in a predictive-geometry space spanned by predictive variance and NLL." width="2000" height="554" loading="lazy"></a>
         <figcaption><b>Figure 1.</b> Left: existing methods favour different goals. Right: raw-shape space merges segments A and B (both end calm) and separates C from D. Predictive-geometry space groups A, C, and D, where expectations were met, and isolates B as a surprise.</figcaption>
       </figure>
     </section>
@@ -210,7 +210,7 @@
         </article>
       </div>
       <figure class="fig reveal">
-        <a href="../assets/research/concepttime/fig2-method.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig2-method.png" alt="Overview diagram of ConceptTime. Stage 1, concept learning: self-supervised density modelling, surprise-guided segmentation and signature construction, and clustering into grounded concept prototypes. Stage 2, downstream: segment-level concept bottleneck, supervised classification, and fidelity-based abstention." width="1124" height="707" loading="lazy"></a>
+        <a href="../assets/research/concepttime/fig2-method.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig2-method.png" alt="Overview diagram of ConceptTime. Stage 1, concept learning: self-supervised density modelling, surprise-guided segmentation and signature construction, and clustering into grounded concept prototypes. Stage 2, downstream: segment-level concept bottleneck, supervised classification, and fidelity-based abstention." width="2000" height="1225" loading="lazy"></a>
         <figcaption><b>Figure 2.</b> Overview of ConceptTime. Stage 1 learns concepts from unlabeled signals; textual concept descriptions are post hoc, not training signals. Stage 2 maps new inputs to concepts by nearest-prototype assignment, classifies through the concept tensor, and uses each segment's prototype distance for abstention.</figcaption>
       </figure>
     </section>
@@ -274,17 +274,17 @@
       </div>
 
       <figure class="fig reveal">
-        <a href="../assets/research/concepttime/fig5-qualitative.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig5-qualitative.png" alt="Qualitative analysis on Epilepsy: class-concept assignment matrix, nearest patches per concept, surprise signal with segment boundaries, and seizure versus non-seizure segments in a residual-energy and surprise-spread concept space." width="1107" height="481" loading="lazy"></a>
+        <a href="../assets/research/concepttime/fig5-qualitative.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig5-qualitative.png" alt="Qualitative analysis on Epilepsy: class-concept assignment matrix, nearest patches per concept, surprise signal with segment boundaries, and seizure versus non-seizure segments in a residual-energy and surprise-spread concept space." width="2400" height="963" loading="lazy"></a>
         <figcaption><b>Figure 5.</b> What the concepts look like on Epilepsy. (A) Although learned without labels, P(concept | class) peaks at different concepts for seizure and non-seizure. (B) Nearest patches to each prototype. (C) Boundaries coincide with surprise peaks. (D) Most seizure patches fall where the density model predicts poorly (region C); most non-seizure patches fall where it predicts well (region A).</figcaption>
       </figure>
 
       <div class="fig-pair" style="margin-top:1.75rem">
         <figure class="fig reveal">
-          <a href="../assets/research/concepttime/fig3-ood.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig3-ood.png" alt="ROC curves for OOD detection on HAR under three Gaussian-noise levels and three shuffle perturbations, comparing ConceptTime fidelity with softmax and prototype-distance scores." width="868" height="556" loading="lazy"></a>
+          <a href="../assets/research/concepttime/fig3-ood.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig3-ood.png" alt="ROC curves for OOD detection on HAR under three Gaussian-noise levels and three shuffle perturbations, comparing ConceptTime fidelity with softmax and prototype-distance scores." width="1800" height="1168" loading="lazy"></a>
           <figcaption><b>Figure 3.</b> OOD detection on HAR under Gaussian-noise and temporal-shuffle perturbations.</figcaption>
         </figure>
         <figure class="fig reveal">
-          <a href="../assets/research/concepttime/fig4-deletion.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig4-deletion.png" alt="Deletion curves on Epilepsy and HAR comparing fidelity-ranked patch deletion with GradientSHAP, TimeX, TimeX++, random, and reverse orderings." width="918" height="312" loading="lazy"></a>
+          <a href="../assets/research/concepttime/fig4-deletion.png" target="_blank" rel="noopener"><img src="../assets/research/concepttime/fig4-deletion.png" alt="Deletion curves on Epilepsy and HAR comparing fidelity-ranked patch deletion with GradientSHAP, TimeX, TimeX++, random, and reverse orderings." width="2000" height="660" loading="lazy"></a>
           <figcaption><b>Figure 4.</b> Deletion faithfulness (lower AUC is better). Fidelity gives the lowest AUC on Epilepsy (0.804); GradientSHAP leads narrowly on HAR (0.411 vs 0.418).</figcaption>
         </figure>
       </div>
