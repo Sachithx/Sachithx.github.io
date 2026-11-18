@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConvRSI | Sachith Abeywickrama</title>
+  <meta name="description" content="ConvRSI parallelizes multi-agent self-improvement by coupling intra-agent convolution over agent features with inter-agent graph convolution over the collaboration topology, all in latent space.">
+  <meta name="author" content="Sachith Abeywickrama">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body class="project-page project-convrsi">
+
+  <header class="site-header">
+    <a class="logo" href="../index.html">Sachith Abeywickrama</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="../index.html#publications">Publications</a>
+      <a href="#motivation">Motivation</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+    </nav>
+    <a class="nav-cta" href="../index.html">Home</a>
+  </header>
+
+  <main>
+    <section class="project-hero">
+      <a class="breadcrumb" href="../index.html#publications">Back to publications</a>
+      <p class="project-kicker">Agentic AI · openJiuwen Team, Huawei · 2026</p>
+      <h1>ConvRSI</h1>
+      <p class="project-paper-title">From Recursion to Convolution: Parallel Self-Improvement for Multi-Agent Systems</p>
+      <p class="project-lead">
+        A framework that replaces part of the sequential recursion in multi-agent self-improvement with convolutional
+        updates: within each agent over its features, and across agents over the collaboration graph, all in latent space.
+      </p>
+      <p class="project-byline">openJiuwen Team, Huawei Technologies. Core contributors: Zheng Wang, Yuang Liu, Sachith Abeywickrama, Yangkai Ding, Tao Yu, Xinyu Zhang, Hongbo Wang, Qi Ye, Xuefeng Jin, and Zhangchun Zhao</p>
+      <div class="project-actions">
+        <a class="btn btn-primary" href="../papers/2611.20891v1.pdf">Read the paper</a>
+        <a class="btn btn-ghost" href="https://arxiv.org/abs/2611.20891" target="_blank" rel="noopener noreferrer">arXiv</a>
+        <a class="btn btn-ghost" href="https://github.com/LYA2333/ConvRSI" target="_blank" rel="noopener noreferrer">Code</a>
+      </div>
+
+      <div class="project-metrics" aria-label="ConvRSI headline results">
+        <div class="project-metric">
+          <strong>+5.04%</strong>
+          <span>performance improvement on MATH-500 over RecursiveMAS</span>
+        </div>
+        <div class="project-metric">
+          <strong>45.11%</strong>
+          <span>lower latency, with 17.27% lower inference cost</span>
+        </div>
+        <div class="project-metric">
+          <strong>1.82×</strong>
+          <span>faster than RecursiveMAS on MATH-500 at three recursion rounds (1.80× on MBPP+)</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section" id="motivation">
+      <div class="project-section-head">
+        <span class="section-number">01</span>
+        <div>
+          <p class="project-kicker">Motivation</p>
+          <h2>Deeper recursion is slow and lets errors spread.</h2>
+        </div>
+      </div>
+      <div class="project-two-col">
+        <div class="project-copy">
+          <p>
+            Recursive self-improvement lets a multi-agent system feed its improvements back into the next round. Scaling
+            it to more agents and deeper iterations runs into three problems. Each round builds on earlier outputs, so
+            mistakes propagate. Chain-like dependencies force later updates to wait for earlier ones, which wastes parallel
+            compute. And refining one feature or one agent in isolation ignores how roles, prompts, experience, and messages
+            depend on each other.
+          </p>
+          <p>
+            <strong>ConvRSI takes a space–time view:</strong> improvement can come not only from more sequential iterations
+            but also from more structured spatial computation within each iteration.
+          </p>
+        </div>
+        <aside class="insight-card">
+          <p class="insight-label">Core idea</p>
+          <h3>Convolve over features and agents, not just over time.</h3>
+          <p>
+            Intra-agent convolution jointly refines an agent's related features. Inter-agent graph convolution aggregates
+            messages along the collaboration topology. Both run as parallel matrix operations on latent states, with no
+            repeated decoding to text.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="project-section" id="method">
+      <div class="project-section-head">
+        <span class="section-number">02</span>
+        <div>
+          <p class="project-kicker">Method</p>
+          <h2>Two coupled convolution stages in latent space.</h2>
+        </div>
+      </div>
+      <div class="method-grid">
+        <article class="method-step">
+          <h3>Stack agent features</h3>
+          <p>Each agent's task, role, system prompt, experience, and message are read from its frozen LLM as hidden-state slots and projected into a shared width.</p>
+        </article>
+        <article class="method-step">
+          <h3>Intra-agent convolution</h3>
+          <p>A channel-wise 1-D convolution along the feature axis lets related features refine each other. A gated readout pools them into one local message per agent.</p>
+        </article>
+        <article class="method-step">
+          <h3>Inter-agent graph convolution</h3>
+          <p>A GCN layer updates all agents' messages at once using the adjacency matrix of the collaboration graph, so sequential, mixture, and other topologies fit the same operator.</p>
+        </article>
+        <article class="method-step">
+          <h3>Train in parallel</h3>
+          <p>Inner training learns prefixes from each agent's local messages independently. Outer training precomputes prefixes for all rounds through the convolutional recurrence, then optimizes on the final output.</p>
+        </article>
+      </div>
+      <p class="method-caption">
+        The language models stay frozen. Only the projections, convolutions, graph layer, and latent transfer modules are trained.
+      </p>
+    </section>
+
+    <section class="project-section" id="results">
+      <div class="project-section-head">
+        <span class="section-number">03</span>
+        <div>
+          <p class="project-kicker">Performance</p>
+          <h2>Better accuracy as depth grows, at a fraction of the runtime.</h2>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <article class="result-card">
+          <p class="result-value">75.0%</p>
+          <h3>MATH-500 accuracy</h3>
+          <p>At three rounds, 3.6 points above RecursiveMAS and 5.4 above Recursive-TextMAS, with a planner–critic–solver team of small models.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-value">+5.2 pts</p>
+          <h3>Mixture collaboration</h3>
+          <p>With code, science, and math specialists plus a summarizer, MATH-500 accuracy rises from 60.6% to 65.8% over RecursiveMAS.</p>
+        </article>
+        <article class="result-card">
+          <p class="result-value">+25.6%</p>
+          <h3>Runtime growth, 1 → 3 rounds</h3>
+          <p>On MATH-500, compared with +88.6% for RecursiveMAS and +109.4% for Recursive-TextMAS. Generated tokens stay nearly flat.</p>
+        </article>
+      </div>
+
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <caption>Sequential-Light team at recursion depth r = 3. Runtime is total benchmark time on NVIDIA RTX 4090D GPUs.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Method</th>
+              <th scope="col">MATH-500 acc. (%)</th>
+              <th scope="col">Time (s)</th>
+              <th scope="col">MBPP+ pass@1 (%)</th>
+              <th scope="col">Time (s)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">ConvRSI</th><td><strong>75.0</strong></td><td><strong>1459</strong></td><td><strong>32.9</strong></td><td><strong>695</strong></td></tr>
+            <tr><th scope="row">RecursiveMAS (latent)</th><td>71.4</td><td>2658</td><td>32.1</td><td>1249</td></tr>
+            <tr><th scope="row">Recursive-TextMAS (text)</th><td>69.6</td><td>4721</td><td>29.1</td><td>3575</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="project-note">ConvRSI also outperforms adapted ModularRSI, Hermes+, and MASS baselines on both benchmarks; MASS at Level-1 trails it by 6.3 points on MATH-500 and 4.2 on MBPP+.</p>
+    </section>
+
+    <aside class="project-navigation" aria-labelledby="more-work">
+      <h2 id="more-work">More research</h2>
+      <div class="project-nav-grid">
+        <a class="project-nav-card" href="concepttime.html"><span>NeurIPS 2026 · Interpretable time series</span><strong>ConceptTime →</strong></a>
+        <a class="project-nav-card" href="entrope.html"><span>NeurIPS 2026 · Dynamic patching</span><strong>EntroPE →</strong></a>
+        <a class="project-nav-card" href="pact.html"><span>Continual adaptation</span><strong>PACT →</strong></a>
+        <a class="project-nav-card" href="neurinferno.html"><span>Protocol inference</span><strong>NeurInferno →</strong></a>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Sachith Abeywickrama</p>
+    <p><a href="../index.html">Home</a> · <a href="../index.html#publications">Publications</a></p>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
